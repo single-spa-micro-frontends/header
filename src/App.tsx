@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "./assets/logo.png";
 import logoText from "./assets/logoText.png";
 import Search from "./components/Search";
@@ -10,16 +10,24 @@ const App = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [cart, setCart] = useState([]);
 
+  useEffect(() => {
+    const cartSub = window.eventBus.cartState$.subscribe((state: any) => {
+      setCart(state.cart);
+    });
+
+    return () => cartSub.unsubscribe();
+  }, []);
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handleSearch = (value: string) => {
-    console.log(value);
+    window.eventBus.setSearchQuery(value);
   };
 
   const onRemoveItem = (value: string) => {
-    console.log(value);
+    window.eventBus.removeFromCart(value);
   };
 
   return (
