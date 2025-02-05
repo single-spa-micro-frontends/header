@@ -1,14 +1,8 @@
 import { FaTrash } from "react-icons/fa";
-
-interface CartItem {
-  bookId: string;
-  image: string;
-  title: string;
-  quantity: number;
-}
+import { BookPayload } from "../types";
 
 interface CartDropdownProps {
-  cart: CartItem[];
+  cart: BookPayload[];
   onRemoveItem: (bookId: string) => void;
 }
 

@@ -5,13 +5,16 @@ import Search from "./components/Search";
 import { FaShoppingCart, FaHeart, FaUser, FaPhoneAlt } from "react-icons/fa";
 import Button from "./components/Button";
 import CartDropdown from "./components/CartDropdown";
+import { BookPayload, EnrichedWindow } from "./types";
 
 const App = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState<BookPayload[]>([]);
 
   useEffect(() => {
-    const cartSub = window.eventBus.cartState$.subscribe((state: any) => {
+    const cartSub = (
+      window as unknown as EnrichedWindow
+    ).eventBus.cartState$.subscribe((state: { cart: BookPayload[] }) => {
       setCart(state.cart);
     });
 
@@ -23,11 +26,11 @@ const App = () => {
   };
 
   const handleSearch = (value: string) => {
-    window.eventBus.setSearchQuery(value);
+    (window as unknown as EnrichedWindow).eventBus.setSearchQuery(value);
   };
 
   const onRemoveItem = (value: string) => {
-    window.eventBus.removeFromCart(value);
+    (window as unknown as EnrichedWindow).eventBus.removeFromCart(value);
   };
 
   return (
