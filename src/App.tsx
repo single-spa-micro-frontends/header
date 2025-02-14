@@ -5,16 +5,16 @@ import Search from "./components/Search";
 import { FaShoppingCart, FaHeart, FaUser, FaPhoneAlt } from "react-icons/fa";
 import Button from "./components/Button";
 import CartDropdown from "./components/CartDropdown";
-import { BookPayload, EnrichedWindow } from "./types";
+import { CartItem, EnrichedWindow } from "./types";
 
 const App = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [cart, setCart] = useState<BookPayload[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
   useEffect(() => {
     const cartSub = (
       window as unknown as EnrichedWindow
-    ).eventBus.cartState$.subscribe((state: { cart: BookPayload[] }) => {
+    ).eventBus.cartState$.subscribe((state: { cart: CartItem[] }) => {
       setCart(state.cart);
     });
 
